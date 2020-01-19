@@ -2,24 +2,46 @@ package com.bulut.quickenglishapi.controller.grammar;
 
 import com.bulut.quickenglishapi.model.grammar.Adjectives;
 import com.bulut.quickenglishapi.repository.grammar.AdjectivesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/grammar/adjectives")
 public class AdjectivesController {
 
-    @Autowired
-    private  AdjectivesRepository repository;
+    private final AdjectivesRepository repository;
 
+    public AdjectivesController(AdjectivesRepository repository) {
+        this.repository = repository;
+    }
 
+    @GetMapping
+    public ResponseEntity<Page<Adjectives>> getAdjectivesWithPage(@RequestParam("page") int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        Page<Adjectives> foundData = repository.findAll(pageable);
+        if (foundData != null) {
+            return ResponseEntity.ok(foundData);
+        } else {
 
-    public Page<Adjectives> getAlAdjectives(){
-        Pageable pageable = PageRequest.of(0, 10);
-        return repository.findAll(pageable);
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping(value = "/all")
+    public ResponseEntity<List<Adjectives>> getAllAdjectives() {
+        List<Adjectives> foundData = repository.findAll();
+        if (foundData != null) {
+            return ResponseEntity.ok(foundData);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -1,13 +1,15 @@
 package com.bulut.quickenglishapi.model.grammar;
 
+import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
-public abstract class GrammarBaseModel {
+@Data
+abstract class GrammarBaseModel {
 
     @Id
-    public ObjectId _id;
-    public String context_header;
-    public String context_text;
+    private ObjectId _id;
+    private String context_header;
+    private String context_text;
 
 }

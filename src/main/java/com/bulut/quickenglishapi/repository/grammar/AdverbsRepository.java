@@ -1,11 +1,11 @@
 package com.bulut.quickenglishapi.repository.grammar;
 
-import com.bulut.quickenglishapi.model.grammar.Prepositions;
+import com.bulut.quickenglishapi.model.grammar.Adverbs;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface PrepositionsRepository extends MongoRepository<Prepositions, String> {
+public interface AdverbsRepository extends MongoRepository<Adverbs, String> {
 
-    Page<Prepositions> findAll(Pageable pageable);
+    Page<Adverbs> findAll(Pageable pageable);
 }
