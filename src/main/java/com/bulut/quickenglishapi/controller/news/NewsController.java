@@ -1,7 +1,7 @@
 package com.bulut.quickenglishapi.controller.news;
 
 import com.bulut.quickenglishapi.model.news.News;
-import com.bulut.quickenglishapi.repository.news.NewsRepostiory;
+import com.bulut.quickenglishapi.repository.news.NewsRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,16 +17,16 @@ import java.util.List;
 @RequestMapping(value = "/news")
 public class NewsController {
 
-    private final NewsRepostiory repostiory;
+    private final NewsRepository newsRepository;
 
-    public NewsController(NewsRepostiory repostiory) {
-        this.repostiory = repostiory;
+    public NewsController(NewsRepository newsRepository) {
+        this.newsRepository = newsRepository;
     }
 
     @GetMapping
     public ResponseEntity<Page<News>> getNewsWithPage(@RequestParam("page") int page){
         Pageable pageable = PageRequest.of(page, 10);
-        Page<News> foundData = repostiory.findAll(pageable);
+        Page<News> foundData = newsRepository.findAll(pageable);
         if (foundData != null){
             return ResponseEntity.ok(foundData);
         }
@@ -37,8 +37,7 @@ public class NewsController {
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<News>> getAllNews(){
-        List<News> foundData = repostiory.findAll();
-        System.out.println("GELEN "+foundData.get(0).getLevel_1().get(0).getTitle());
+        List<News> foundData = newsRepository.findAll();
         if (foundData != null){
             return ResponseEntity.ok(foundData);
         }
