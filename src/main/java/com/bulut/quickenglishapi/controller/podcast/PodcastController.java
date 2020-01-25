@@ -27,16 +27,6 @@ public class PodcastController {
     private final PodcastVoa1Repository voa1repo;
     private final PodcastVoa2Repository voa2repo;
 
-
-
-    //Todo: level_1
-    //Todo: level_2
-    //Todo: level_3
-    //Todo: level_business
-    //Todo: level_voa_level_1
-    //Todo: level_voa_level_2
-
-
     // GET DATA WITH PAGEABLE
 
     /**
@@ -119,7 +109,7 @@ public class PodcastController {
     /**
      * get level_voa_level_2 data with page
      * */
-    @GetMapping("/level_voa_level_1")
+    @GetMapping("/level_voa_level_2")
     public ResponseEntity<Page<PodcastVoa2>> getVoa2WithPage(@RequestParam("page") int page){
         Pageable pageable = PageRequest.of(page,10);
         Page<PodcastVoa2> foundData = voa2repo.findAll(pageable);

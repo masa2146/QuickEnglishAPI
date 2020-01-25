@@ -1,7 +1,9 @@
 package com.bulut.quickenglishapi.controller.grammar;
 
+import com.bulut.quickenglishapi.dto.grammar.*;
 import com.bulut.quickenglishapi.model.grammar.*;
 import com.bulut.quickenglishapi.repository.grammar.*;
+import com.bulut.quickenglishapi.service.grammar.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,19 +21,19 @@ import java.util.List;
 @AllArgsConstructor
 public class GrammarController {
 
-    private final AdjectivesRepository adjectivesRepository;
-    private final AdverbsRepository adverbsRepository;
-    private final NounsRepository nounsRepository;
-    private final PrepositionsRepository prepositionsRepository;
-    private final PronounsRepository pronounsRepository;
-    private final VerbsRepository verbsRepository;
+    private final AdjectivesService adjectivesService;
+    private final AdverbsService adverbsService;
+    private final NounsService nounsService;
+    private final PrepositionsService prepositionsService;
+    private final PronounsService pronounsService;
+    private final VerbsService verbsService;
 
     // GET DATA WITH PAGEABLE
 
     @GetMapping("/adjectives")
-    public ResponseEntity<Page<Adjectives>> getAdjectivesWithPage(@RequestParam("page") int page) {
+    public ResponseEntity<Page<AdjectivesDto>> getAdjectivesWithPage(@RequestParam("page") int page) {
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Adjectives> foundData = adjectivesRepository.findAll(pageable);
+        Page<AdjectivesDto> foundData = adjectivesService.findAll(pageable);
         if (foundData != null) {
             return ResponseEntity.ok(foundData);
         } else {
@@ -41,9 +43,9 @@ public class GrammarController {
     }
 
     @GetMapping("/adverbs")
-    public ResponseEntity<Page<Adverbs>> getAdverbsWithPage(@RequestParam("page") int page) {
+    public ResponseEntity<Page<AdverbsDto>> getAdverbsWithPage(@RequestParam("page") int page) {
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Adverbs> foundData = adverbsRepository.findAll(pageable);
+        Page<AdverbsDto> foundData = adverbsService.findAll(pageable);
         if (foundData != null) {
             return ResponseEntity.ok(foundData);
         } else {
@@ -53,34 +55,32 @@ public class GrammarController {
     }
 
     @GetMapping("/nouns")
-    public ResponseEntity<Page<Nouns>> getNounsWithPage(@RequestParam("page") int page) {
+    public ResponseEntity<Page<NounsDto>> getNounsWithPage(@RequestParam("page") int page) {
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Nouns> foundData = nounsRepository.findAll(pageable);
+        Page<NounsDto> foundData = nounsService.findAll(pageable);
         if (foundData != null) {
             return ResponseEntity.ok(foundData);
         } else {
-
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/prepositions")
-    public ResponseEntity<Page<Prepositions>> getPrepositionsWithPage(@RequestParam("page") int page) {
+    public ResponseEntity<Page<PrepositionsDto>> getPrepositionsWithPage(@RequestParam("page") int page) {
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Prepositions> foundData = prepositionsRepository.findAll(pageable);
+        Page<PrepositionsDto> foundData = prepositionsService.findAll(pageable);
         if (foundData != null) {
             return ResponseEntity.ok(foundData);
         } else {
-
             return ResponseEntity.notFound().build();
         }
     }
 
 
     @GetMapping("/pronouns")
-    public ResponseEntity<Page<Pronouns>> getPronounsWithPage(@RequestParam("page") int page) {
+    public ResponseEntity<Page<PronounsDto>> getPronounsWithPage(@RequestParam("page") int page) {
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Pronouns> foundData = pronounsRepository.findAll(pageable);
+        Page<PronounsDto> foundData = pronounsService.findAll(pageable);
         if (foundData != null) {
             return ResponseEntity.ok(foundData);
         } else {
@@ -91,9 +91,9 @@ public class GrammarController {
 
 
     @GetMapping("/verbs")
-    public ResponseEntity<Page<Verbs>> getVerbsWithPage(@RequestParam("page") int page) {
+    public ResponseEntity<Page<VerbsDto>> getVerbsWithPage(@RequestParam("page") int page) {
         Pageable pageable = PageRequest.of(page, 10);
-        Page<Verbs> foundData = verbsRepository.findAll(pageable);
+        Page<VerbsDto> foundData = verbsService.findAll(pageable);
         if (foundData != null) {
             return ResponseEntity.ok(foundData);
         } else {
@@ -105,8 +105,8 @@ public class GrammarController {
     // GET ALL DATA
 
     @GetMapping(value = "/adjectives/all")
-    public ResponseEntity<List<Adjectives>> getAllAdjectives() {
-        List<Adjectives> foundData = adjectivesRepository.findAll();
+    public ResponseEntity<List<AdjectivesDto>> getAllAdjectives() {
+        List<AdjectivesDto> foundData = adjectivesService.findAll();
         if (foundData != null) {
             return ResponseEntity.ok(foundData);
         } else {
@@ -115,8 +115,8 @@ public class GrammarController {
     }
 
     @GetMapping(value = "/adverbs/all")
-    public ResponseEntity<List<Adverbs>> getAllAdverbs() {
-        List<Adverbs> foundData = adverbsRepository.findAll();
+    public ResponseEntity<List<AdverbsDto>> getAllAdverbs() {
+        List<AdverbsDto> foundData = adverbsService.findAll();
         if (foundData != null) {
             return ResponseEntity.ok(foundData);
         } else {
@@ -125,8 +125,8 @@ public class GrammarController {
     }
 
     @GetMapping(value = "/nouns/all")
-    public ResponseEntity<List<Nouns>> getAllNouns() {
-        List<Nouns> foundData = nounsRepository.findAll();
+    public ResponseEntity<List<NounsDto>> getAllNouns() {
+        List<NounsDto> foundData = nounsService.findAll();
         if (foundData != null) {
             return ResponseEntity.ok(foundData);
         } else {
@@ -135,8 +135,8 @@ public class GrammarController {
     }
 
     @GetMapping(value = "/prepositions/all")
-    public ResponseEntity<List<Prepositions>> getAllPrepositions() {
-        List<Prepositions> foundData = prepositionsRepository.findAll();
+    public ResponseEntity<List<PrepositionsDto>> getAllPrepositions() {
+        List<PrepositionsDto> foundData = prepositionsService.findAll();
         if (foundData != null) {
             return ResponseEntity.ok(foundData);
         } else {
@@ -145,8 +145,8 @@ public class GrammarController {
     }
 
     @GetMapping(value = "/pronouns/all")
-    public ResponseEntity<List<Pronouns>> getAllPronouns() {
-        List<Pronouns> foundData = pronounsRepository.findAll();
+    public ResponseEntity<List<PronounsDto>> getAllPronouns() {
+        List<PronounsDto> foundData = pronounsService.findAll();
         if (foundData != null) {
             return ResponseEntity.ok(foundData);
         } else {
@@ -155,24 +155,14 @@ public class GrammarController {
     }
 
     @GetMapping(value = "/verbs/all")
-    public ResponseEntity<List<Verbs>> getAllVerbs() {
-        List<Verbs> foundData = verbsRepository.findAll();
-        if (foundData != null){
-            return  ResponseEntity.ok(foundData);
-        }
-        else{
+    public ResponseEntity<List<VerbsDto>> getAllVerbs() {
+        List<VerbsDto> foundData = verbsService.findAll();
+        if (foundData != null) {
+            return ResponseEntity.ok(foundData);
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
-
-
-
-
-
-
-
-
-
 
 
 }
